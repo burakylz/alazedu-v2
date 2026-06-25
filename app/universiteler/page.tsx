@@ -32,7 +32,8 @@ export default function Universiteler() {
         .ustats{display:flex;gap:34px;margin-top:26px}
         .ustats b{font-family:Fraunces,serif;font-size:40px;color:var(--gold);display:block;line-height:1}
         .ustats span{font-size:14px;color:var(--mut)}
-        @media(max-width:920px){.uhero-grid{grid-template-columns:1fr}.uhero-collage{height:240px}}
+        .uhero-grid h1{font-size:54px;line-height:1.04}
+        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:31px}.uhero-collage{height:230px}.ustats{gap:22px}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
       <header style={{ padding: '60px 0 30px' }}>
@@ -40,7 +41,7 @@ export default function Universiteler() {
           <div className="uhero-grid">
             <div>
               <div className="eyebrow">Üniversiteler</div>
-              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 54, lineHeight: 1.04, letterSpacing: '-.015em', margin: '16px 0 0' }}>İngiltere Üniversiteleri</h1>
+              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, letterSpacing: '-.015em', margin: '16px 0 0' }}>İngiltere Üniversiteleri</h1>
               <div className="ustats">
                 <div><b>{cities.length}</b><span>Şehir</span></div>
                 <div><b>{totalProg.toLocaleString('tr-TR')}</b><span>Program</span></div>

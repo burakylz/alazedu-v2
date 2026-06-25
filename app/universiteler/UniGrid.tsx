@@ -43,7 +43,7 @@ export default function UniGrid({ unis, cities }: { unis: U[]; cities: string[] 
 
       <div>
         <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> üniversite{prog ? ` · "${prog}" içeren` : ''}</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(248px,1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(248px,100%),1fr))', gap: 20 }}>
           {filtered.map((u) => (
             <Link key={u.slug} href={`/universiteler/${u.slug}`} className="ucard">
               <div className="logo">
