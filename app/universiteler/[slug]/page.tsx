@@ -10,6 +10,13 @@ type Prog = { n: string; lvl: string; aw: string; f: string; d: string; ielts: s
 type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; img: string; ielts: string[]; prior: string[]; programs: Prog[]; about?: string; gb?: string[] }
 const unis = (data as any).universities as Uni[]
 const LBLS = ['Üniversite Tipi', 'Kuruluş Yılı', 'Eğitim Dili', 'Öğrenci Sayısı', 'Uluslararası Öğrenci', 'Yerleşkeler', 'Dünya Sıralaması']
+// Russell Group üyeleri (Foundation şartı yalnızca bunlarda geçerli)
+const RUSSELL = new Set([
+  'queen-mary-university-of-london', 'university-of-manchester', 'university-of-nottingham',
+  'university-of-exeter', 'university-of-warwick', 'university-of-edinburgh', 'university-of-birmingham',
+  'university-of-bristol', 'university-of-sheffield', 'university-of-glasgow', 'university-of-southampton',
+  'durham-university', 'university-of-leeds', 'university-of-liverpool', 'university-of-york', 'newcastle-university',
+])
 const nav = fs.readFileSync(path.join(process.cwd(), 'app', 'partials.html'), 'utf8')
 
 export function generateStaticParams() { return unis.map((u) => ({ slug: u.slug })) }
@@ -80,13 +87,23 @@ export default function Page({ params }: { params: { slug: string } }) {
 
       <section className="sec" style={{ paddingTop: 50, paddingBottom: 0 }}>
         <div className="wrap">
-          <div style={{ background: 'var(--gold-soft)', border: '1px solid rgba(216,180,99,.3)', borderRadius: 16, padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 24 }}>
-            <span style={{ fontSize: 22 }}>🎓</span>
-            <div>
-              <b style={{ fontSize: 16 }}>Türk lise diplomasıyla başvuru — Foundation gerekli mi?</b>
-              <p style={{ color: 'var(--mut)', fontSize: 14.5, marginTop: 6 }}>Türk lise diplomasıyla çoğu lisans programına <b style={{ color: 'var(--txt)' }}>doğrudan giriş genelde mümkün değildir</b>; bu üniversitede çoğu bölüm için <b style={{ color: 'var(--txt)' }}>1 yıllık Foundation (hazırlık) yılı</b> gerekir. IB veya A-Level gibi uluslararası diplomalar doğrudan kabul edilebilir. Senin durumunu birlikte değerlendirelim.</p>
+          {RUSSELL.has(u.slug) ? (
+            <div style={{ background: 'var(--gold-soft)', border: '1px solid rgba(216,180,99,.3)', borderRadius: 16, padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 24 }}>
+              <span style={{ fontSize: 22 }}>🎓</span>
+              <div>
+                <b style={{ fontSize: 16 }}>Türk lise diplomasıyla başvuru — Foundation gerekli mi?</b>
+                <p style={{ color: 'var(--mut)', fontSize: 14.5, marginTop: 6 }}>{u.name} bir <b style={{ color: 'var(--txt)' }}>Russell Group</b> üniversitesidir. Türk lise diplomasıyla çoğu lisans programına doğrudan giriş için genellikle <b style={{ color: 'var(--txt)' }}>1 yıllık Foundation (hazırlık) yılı</b> gerekir. {u.slug === 'university-of-exeter' ? <>Exeter’de IB veya A-Level diplomanız olsa dahi Foundation istenebilir; durumunuzu birlikte değerlendirelim.</> : <><b style={{ color: 'var(--txt)' }}>IB veya A-Level (AP)</b> diplomanız varsa doğrudan giriş mümkündür.</>}</p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ background: 'rgba(74,201,126,.10)', border: '1px solid rgba(74,201,126,.32)', borderRadius: 16, padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 24 }}>
+              <span style={{ fontSize: 22 }}>✅</span>
+              <div>
+                <b style={{ fontSize: 16 }}>Türk lise diplomasıyla doğrudan başvuru</b>
+                <p style={{ color: 'var(--mut)', fontSize: 14.5, marginTop: 6 }}>{u.name} Russell Group dışındadır; bu üniversiteye Türk lise diplomasıyla çoğu lisans programına <b style={{ color: 'var(--txt)' }}>Foundation olmadan doğrudan</b> başvurabilirsiniz (program ve not şartlarına göre). IB veya A-Level diplomanız varsa ek avantaj sağlar. Uygunluğunuzu birlikte değerlendirelim.</p>
+              </div>
+            </div>
+          )}
           <div className="why">
             <div className="w"><b>İngilizce (IELTS)</b><span>{u.ielts[0] ? u.ielts.join(' · ') : 'Programa göre IELTS 6.0–7.0'}</span></div>
             <div className="w"><b>Başvuru Dönemi</b><span>Eylül 2026 girişi · başvurular yaz aylarında kapanır</span></div>
