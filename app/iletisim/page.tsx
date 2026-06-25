@@ -15,7 +15,7 @@ export default function Iletisim() {
     <>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
       <section className="sec" style={{ paddingTop: 60, paddingBottom: 50 }}>
-        <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 1.05fr', gap: 48, alignItems: 'start' }}>
+        <div className="wrap iletisimgrid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.05fr', gap: 48, alignItems: 'start' }}>
           <div>
             <div className="eyebrow">Ücretsiz Danışmanlık</div>
             <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 46, lineHeight: 1.08, letterSpacing: '-.015em', margin: '14px 0 16px' }}>Hayalindeki eğitime ilk adımı at</h1>
