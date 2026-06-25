@@ -7,7 +7,7 @@ import data from '../languageschools.json'
 
 type Prog = { n: string; ders: number; saat: string }
 type School = {
-  slug: string; name: string; city: string; domain: string; logo: string
+  slug: string; name: string; city: string; domain: string; logo: string; photo: string
   cap: number | null; avgClass: string | null; avgAge: number | null; minAge: number | null
   lesson: number | null; uni: boolean; airport: string | null; fac: string[]; prog: Prog[]; priceWk: number
 }
@@ -66,28 +66,30 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
-      <header style={{ padding: '48px 0 34px', borderBottom: '1px solid var(--line)' }}>
-        <div className="wrap">
-          <div style={{ color: 'var(--mut2)', fontSize: 13, marginBottom: 20 }}>
-            <Link href="/">Ana Sayfa</Link> <span style={{ color: 'var(--gold)' }}>›</span> <Link href="/dil-okullari">Dil Okulları</Link> <span style={{ color: 'var(--gold)' }}>›</span> {s.name}
+      <header style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--line)' }}>
+        {s.photo && <img src={s.photo} alt={`${s.city}, İngiltere`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(6,11,22,.96),rgba(6,11,22,.72) 55%,rgba(6,11,22,.55))' }} />
+        <div className="wrap" style={{ position: 'relative', zIndex: 2, padding: '40px 0 38px' }}>
+          <div style={{ color: 'rgba(255,255,255,.7)', fontSize: 13, marginBottom: 22 }}>
+            <Link href="/" style={{ color: 'rgba(255,255,255,.8)' }}>Ana Sayfa</Link> <span style={{ color: 'var(--gold)' }}>›</span> <Link href="/dil-okullari" style={{ color: 'rgba(255,255,255,.8)' }}>Dil Okulları</Link> <span style={{ color: 'var(--gold)' }}>›</span> {s.name}
           </div>
-          <div style={{ display: 'flex', gap: 26, alignItems: 'center', flexWrap: 'wrap' }}>
-            <div style={{ width: 104, height: 104, borderRadius: 18, background: '#f3f1ea', display: 'grid', placeItems: 'center', flexShrink: 0, padding: 16 }}>
-              {s.logo ? <img src={s.logo} alt={s.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} /> : <span style={{ fontFamily: 'Fraunces,serif', fontSize: 30, fontWeight: 600, color: '#0a1426' }}>{ini}</span>}
+          <div style={{ display: 'flex', gap: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ width: 86, height: 86, borderRadius: 16, background: '#fff', display: 'grid', placeItems: 'center', flexShrink: 0, padding: 14, boxShadow: '0 6px 24px rgba(0,0,0,.3)' }}>
+              {s.logo ? <img src={s.logo} alt={s.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} /> : <span style={{ fontFamily: 'Fraunces,serif', fontSize: 26, fontWeight: 600, color: '#0a1426' }}>{ini}</span>}
             </div>
             <div>
-              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 40, lineHeight: 1.08, letterSpacing: '-.01em' }}>{s.name}</h1>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 12, color: 'var(--mut)', fontSize: 15 }}>
+              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 42, lineHeight: 1.06, letterSpacing: '-.01em', color: '#fff' }}>{s.name}</h1>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 12, color: 'rgba(255,255,255,.85)', fontSize: 15 }}>
                 <span>📍 {s.city}, İngiltere</span>
-                {s.minAge && <span>🎂 Min <b style={{ color: 'var(--txt)' }}>{s.minAge}</b> yaş</span>}
-                {s.avgClass && <span>👥 Sınıf <b style={{ color: 'var(--txt)' }}>{s.avgClass}</b></span>}
+                {s.minAge && <span>🎂 Min <b style={{ color: '#fff' }}>{s.minAge}</b> yaş</span>}
+                {s.avgClass && <span>👥 Sınıf <b style={{ color: '#fff' }}>{s.avgClass}</b></span>}
                 <span>💷 <b style={{ color: 'var(--gold)' }}>£{s.priceWk}</b>/hafta'dan</span>
               </div>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 14, marginTop: 26 }}>
             <button className="btn-gold">Ücretsiz Danışmanlık Al</button>
-            <Link href="/dil-okullari"><button className="btn-ghost">← Tüm Dil Okulları</button></Link>
+            <Link href="/dil-okullari"><button className="btn-ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,.35)' }}>← Tüm Dil Okulları</button></Link>
           </div>
         </div>
       </header>
