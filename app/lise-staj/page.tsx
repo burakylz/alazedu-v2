@@ -34,7 +34,8 @@ export default function LiseStaj() {
         .ptable th,.ptable td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line)}
         .ptable th{color:var(--mut2);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
         .ptable td:first-child{font-weight:600}.ptable td{color:var(--mut)}
-        @media(max-width:760px){.uhero-grid{grid-template-columns:1fr}.uhero-collage{height:240px}}
+        .uhero-grid h1{font-size:50px;line-height:1.05}
+        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:30px}.uhero-collage{height:230px}.ustats{gap:20px}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
 
@@ -43,7 +44,7 @@ export default function LiseStaj() {
           <div className="uhero-grid">
             <div>
               <div className="eyebrow">Lise Staj & Kariyer</div>
-              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 50, lineHeight: 1.05, letterSpacing: '-.015em', margin: '16px 0 0' }}>Lise Staj Yaz Programları 2026</h1>
+              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, letterSpacing: '-.015em', margin: '16px 0 0' }}>Lise Staj Yaz Programları 2026</h1>
               <div className="ustats">
                 <div><b>{programs.length}</b><span>Kariyer alanı</span></div>
                 <div><b>{categories.length}</b><span>Kategori</span></div>

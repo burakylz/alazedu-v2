@@ -39,7 +39,7 @@ export default function InternGrid({ programs, categories }: { programs: P[]; ca
 
       <div>
         <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> kariyer programı</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(258px,1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(258px,100%),1fr))', gap: 20 }}>
           {filtered.map((p) => (
             <Link key={p.slug} href={`/lise-staj/${p.slug}`} className="scard">
               <div className="ph">
