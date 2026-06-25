@@ -19,11 +19,14 @@ export async function POST(request: NextRequest) {
     if (!isim || (!email && !telefon)) {
       return NextResponse.json({ error: 'İsim ve iletişim bilgisi gerekli' }, { status: 400 })
     }
-    const url = process.env.SUPABASE_URL
+    let url = process.env.SUPABASE_URL
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY
     if (!url || !key) {
       return NextResponse.json({ error: 'Sunucu yapılandırması eksik' }, { status: 500 })
     }
+    // URL normalize: başında https:// yoksa ekle, sonundaki / temizle
+    url = url.trim().replace(/\/+$/, '')
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url
     const ilgi = program ? (ILGI_MAP[program] || null) : null
     // İlgi alanı eşleşmezse (Yaz Okulu, Lise Staj, Burs, Vize, Genel) notlara ekle
     const notlar = [program && !ilgi ? `Konu: ${program}` : '', mesaj || ''].filter(Boolean).join(' · ') || null
