@@ -7,8 +7,9 @@ import data from '../universities.json'
 import DetailPrograms from './DetailPrograms'
 
 type Prog = { n: string; lvl: string; aw: string; f: string; d: string; ielts: string; fee: number }
-type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; img: string; ielts: string[]; prior: string[]; programs: Prog[] }
+type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; img: string; ielts: string[]; prior: string[]; programs: Prog[]; about?: string; gb?: string[] }
 const unis = (data as any).universities as Uni[]
+const LBLS = ['Üniversite Tipi', 'Kuruluş Yılı', 'Eğitim Dili', 'Öğrenci Sayısı', 'Uluslararası Öğrenci', 'Yerleşkeler', 'Dünya Sıralaması']
 const nav = fs.readFileSync(path.join(process.cwd(), 'app', 'partials.html'), 'utf8')
 
 export function generateStaticParams() { return unis.map((u) => ({ slug: u.slug })) }
@@ -56,6 +57,26 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </header>
+
+      {(u.about || (u.gb && u.gb.length > 0)) && (
+        <section className="sec" style={{ paddingTop: 50, paddingBottom: 0 }}><div className="wrap">
+          <div className="eyebrow" style={{ marginBottom: 8 }}>Üniversite Hakkında</div>
+          <h2 style={{ marginBottom: 14 }}>{u.name}</h2>
+          {u.about && <p style={{ color: 'var(--mut)', fontSize: 16, lineHeight: 1.8, maxWidth: 900 }}>{u.about}</p>}
+          {u.gb && u.gb.length > 0 && (
+            <>
+              <h3 style={{ fontSize: 19, margin: u.about ? '32px 0 16px' : '4px 0 16px', fontFamily: 'Fraunces,serif', fontWeight: 600 }}>Genel bilgiler</h3>
+              <div className="why">
+                {u.gb.map((g, i) => {
+                  const lbl = LBLS.find((l) => g.startsWith(l))
+                  const val = lbl ? g.slice(lbl.length).trim() : g
+                  return (<div className="w" key={i}><b>{lbl || 'Bilgi'}</b><span>{val || g}</span></div>)
+                })}
+              </div>
+            </>
+          )}
+        </div></section>
+      )}
 
       <section className="sec" style={{ paddingTop: 50, paddingBottom: 0 }}>
         <div className="wrap">
