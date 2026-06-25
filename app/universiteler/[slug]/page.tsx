@@ -17,6 +17,8 @@ const RUSSELL = new Set([
   'university-of-bristol', 'university-of-sheffield', 'university-of-glasgow', 'university-of-southampton',
   'durham-university', 'university-of-leeds', 'university-of-liverpool', 'university-of-york', 'newcastle-university',
 ])
+// Foundation gerektirenler: Russell Group + City (St George's)
+const FOUNDATION = new Set<string>([...RUSSELL, 'city-st-georges-university-of-london'])
 const nav = fs.readFileSync(path.join(process.cwd(), 'app', 'partials.html'), 'utf8')
 
 export function generateStaticParams() { return unis.map((u) => ({ slug: u.slug })) }
@@ -87,12 +89,12 @@ export default function Page({ params }: { params: { slug: string } }) {
 
       <section className="sec" style={{ paddingTop: 50, paddingBottom: 0 }}>
         <div className="wrap">
-          {RUSSELL.has(u.slug) ? (
+          {FOUNDATION.has(u.slug) ? (
             <div style={{ background: 'var(--gold-soft)', border: '1px solid rgba(216,180,99,.3)', borderRadius: 16, padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 24 }}>
               <span style={{ fontSize: 22 }}>🎓</span>
               <div>
                 <b style={{ fontSize: 16 }}>Türk lise diplomasıyla başvuru — Foundation gerekli mi?</b>
-                <p style={{ color: 'var(--mut)', fontSize: 14.5, marginTop: 6 }}>{u.name} bir <b style={{ color: 'var(--txt)' }}>Russell Group</b> üniversitesidir. Türk lise diplomasıyla çoğu lisans programına doğrudan giriş için genellikle <b style={{ color: 'var(--txt)' }}>1 yıllık Foundation (hazırlık) yılı</b> gerekir. {u.slug === 'university-of-exeter' ? <>Exeter’de IB veya A-Level diplomanız olsa dahi Foundation istenebilir; durumunuzu birlikte değerlendirelim.</> : <><b style={{ color: 'var(--txt)' }}>IB veya A-Level (AP)</b> diplomanız varsa doğrudan giriş mümkündür.</>}</p>
+                <p style={{ color: 'var(--mut)', fontSize: 14.5, marginTop: 6 }}>{RUSSELL.has(u.slug) ? <>{u.name} bir <b style={{ color: 'var(--txt)' }}>Russell Group</b> üniversitesidir. </> : <>{u.name} için </>}Türk lise diplomasıyla çoğu lisans programına doğrudan giriş için genellikle <b style={{ color: 'var(--txt)' }}>1 yıllık Foundation (hazırlık) yılı</b> gerekir. {u.slug === 'university-of-exeter' ? <>Exeter’de IB veya A-Level diplomanız olsa dahi Foundation istenebilir; durumunuzu birlikte değerlendirelim.</> : <><b style={{ color: 'var(--txt)' }}>IB veya A-Level (AP)</b> diplomanız varsa doğrudan giriş mümkündür.</>}</p>
               </div>
             </div>
           ) : (
