@@ -27,7 +27,7 @@ export default function DetailPrograms({ programs }: { programs: Prog[] }) {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Bölüm ara… (ör. Hukuk, Computer Science, Business)" style={{ flex: 1, minWidth: 280, height: 46, background: 'rgba(8,16,30,.55)', border: '1px solid var(--line2)', borderRadius: 12, color: 'var(--txt)', padding: '0 16px', fontSize: 15, fontFamily: 'inherit' }} />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Bölüm ara… (ör. Hukuk, Computer Science, Business)" style={{ flex: 1, minWidth: 280, height: 46, background: 'rgba(14,28,52,.05)', border: '1px solid var(--line2)', borderRadius: 12, color: 'var(--txt)', padding: '0 16px', fontSize: 15, fontFamily: 'inherit' }} />
         <span style={{ color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{list.length}</b> program · {fieldChips.length} alan</span>
       </div>
 
@@ -53,7 +53,7 @@ export default function DetailPrograms({ programs }: { programs: Prog[] }) {
             {opened && (
               <div style={{ display: 'grid', gap: 10, padding: '4px 14px 16px' }}>
                 {fields[fn].map((p, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', background: 'rgba(8,16,30,.4)', border: '1px solid var(--line)', borderRadius: 10, padding: '13px 16px' }}>
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', background: 'var(--card2)', border: '1px solid var(--line)', borderRadius: 10, padding: '13px 16px' }}>
                     <div>
                       <div style={{ fontWeight: 500, fontSize: 15 }}>{p.n} {p.aw && <span style={{ color: 'var(--mut2)', fontWeight: 400 }}>· {p.aw}</span>}</div>
                       <div style={{ color: 'var(--mut2)', fontSize: 13, marginTop: 3 }}>{[p.d, p.ielts].filter(Boolean).join(' · ')}</div>
@@ -69,7 +69,7 @@ export default function DetailPrograms({ programs }: { programs: Prog[] }) {
       {list.length === 0 && <p style={{ color: 'var(--mut2)', padding: '30px 0', textAlign: 'center' }}>Bu aramayla program bulunamadı.</p>}
 
       <style>{`
-        .pchip{background:rgba(8,16,30,.55);border:1px solid var(--line);border-radius:999px;color:var(--mut);font-size:13px;font-weight:600;padding:7px 14px;cursor:pointer;font-family:inherit;transition:all .15s}
+        .pchip{background:rgba(14,28,52,.05);border:1px solid var(--line);border-radius:999px;color:var(--mut);font-size:13px;font-weight:600;padding:7px 14px;cursor:pointer;font-family:inherit;transition:all .15s}
         .pchip:hover{border-color:var(--line2);color:var(--txt)}
         .pchip.on{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
       `}</style>
