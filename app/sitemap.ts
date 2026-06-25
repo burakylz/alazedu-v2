@@ -2,14 +2,16 @@ import type { MetadataRoute } from 'next'
 import unis from './universiteler/universities.json'
 import dil from './dil-okullari/languageschools.json'
 import yaz from './yaz-okullari/summerschools.json'
+import staj from './lise-staj/internships.json'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://www.alazedu.com'
-  const top = ['', '/universiteler', '/dil-okullari', '/yaz-okullari', '/hakkimizda', '/iletisim']
+  const top = ['', '/universiteler', '/dil-okullari', '/yaz-okullari', '/lise-staj', '/hakkimizda', '/iletisim']
   const uniRoutes = ((unis as any).universities as any[]).map((u) => `/universiteler/${u.slug}`)
   const dilRoutes = ((dil as any).schools as any[]).map((s) => `/dil-okullari/${s.slug}`)
   const yazRoutes = ((yaz as any).schools as any[]).map((s) => `/yaz-okullari/${s.slug}`)
-  const all = [...top, ...uniRoutes, ...dilRoutes, ...yazRoutes]
+  const stajRoutes = ((staj as any).programs as any[]).map((s) => `/lise-staj/${s.slug}`)
+  const all = [...top, ...uniRoutes, ...dilRoutes, ...yazRoutes, ...stajRoutes]
   return all.map((r) => ({
     url: base + r,
     lastModified: new Date(),
