@@ -46,7 +46,7 @@ export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: 
 
       <div>
         <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> dil okulu</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(258px,1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(258px,100%),1fr))', gap: 20 }}>
           {filtered.map((s) => (
             <Link key={s.slug} href={`/dil-okullari/${s.slug}`} className="scard">
               <div className="ph">

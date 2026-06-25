@@ -41,8 +41,9 @@ export default function DilOkullari() {
         .ptable th{color:var(--mut2);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
         .ptable td:first-child{font-weight:600}
         .ptable td{color:var(--mut)}
+        .uhero-grid h1{font-size:54px;line-height:1.04}
         .infogrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
-        @media(max-width:760px){.uhero-grid{grid-template-columns:1fr}.uhero-collage{height:240px}.infogrid{grid-template-columns:1fr}}
+        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:31px}.uhero-collage{height:230px}.ustats{gap:22px}.infogrid{grid-template-columns:1fr}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
 
@@ -51,7 +52,7 @@ export default function DilOkullari() {
           <div className="uhero-grid">
             <div>
               <div className="eyebrow">Dil Okulları</div>
-              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 54, lineHeight: 1.04, letterSpacing: '-.015em', margin: '16px 0 0' }}>İngiltere Dil Okulları</h1>
+              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, letterSpacing: '-.015em', margin: '16px 0 0' }}>İngiltere Dil Okulları</h1>
               <div className="ustats">
                 <div><b>{schools.length}</b><span>Okul</span></div>
                 <div><b>{cities.length}</b><span>Şehir</span></div>
