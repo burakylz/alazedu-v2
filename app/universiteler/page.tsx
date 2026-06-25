@@ -6,11 +6,11 @@ import UniGrid from './UniGrid'
 
 export const metadata: Metadata = {
   title: 'İngiltere Üniversiteleri — Programlar, Ücretler ve Kabul Şartları',
-  description: "İngiltere'nin önde gelen üniversiteleri; şehir ve programa göre filtrele, ücretleri ve kabul şartlarını incele, AlazEdu ile başvur.",
+  description: "İngiltere'nin önde gelen üniversiteleri; şehir ve bölüme göre filtrele, ücretleri ve kabul şartlarını incele, AlazEdu ile başvur.",
   alternates: { canonical: 'https://www.alazedu.com/universiteler' },
 }
 
-type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; programs: any[] }
+type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; img: string; programs: { n: string; f: string }[] }
 const unis = ((data as any).universities as Uni[])
 const nav = fs.readFileSync(path.join(process.cwd(), 'app', 'partials.html'), 'utf8')
 
@@ -18,7 +18,7 @@ export default function Universiteler() {
   const totalProg = unis.reduce((a, u) => a + u.programs.length, 0)
   const cities = Array.from(new Set(unis.map((u) => u.city))).sort((a, b) => a.localeCompare(b, 'tr'))
   const slim = unis
-    .map((u) => ({ slug: u.slug, name: u.name, city: u.city, qs: u.qs, p: u.programs.length }))
+    .map((u) => ({ slug: u.slug, name: u.name, city: u.city, qs: u.qs, img: u.img, p: u.programs.length, ps: u.programs.map((x) => x.n).join(' · ').toLowerCase() }))
     .sort((a, b) => a.name.localeCompare(b.name, 'tr'))
   return (
     <>
@@ -35,7 +35,6 @@ export default function Universiteler() {
         @media(max-width:920px){.uhero-grid{grid-template-columns:1fr}.uhero-collage{height:240px}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
-
       <header style={{ padding: '60px 0 30px' }}>
         <div className="wrap">
           <div className="uhero-grid">
@@ -56,23 +55,20 @@ export default function Universiteler() {
           </div>
         </div>
       </header>
-
       <section style={{ padding: '8px 0 10px' }}>
         <div className="wrap" style={{ maxWidth: 880, textAlign: 'center', margin: '0 auto' }}>
           <h2 style={{ marginBottom: 16 }}>İngiltere'de üniversite eğitimi 2026</h2>
           <p style={{ color: 'var(--mut)', fontSize: 16.5, lineHeight: 1.8 }}>
-            Birleşik Krallık yükseköğretim sektörü, en dinamik dönemlerinden birini yaşıyor. İngiltere, sadece akademik bir merkez değil; mezuniyet sonrası 2 yıllık <b style={{ color: 'var(--txt)' }}>Graduate Route</b> çalışma hakkı ve küresel yetenek vizeleriyle kariyer odaklı bir fırlatma rampası. Lisans çoğunlukla 3 yıl, yüksek lisans 1 yıldır. Aşağıdan şehir veya programa göre filtreleyerek hedefine uygun üniversiteyi bul; ücretsiz danışmanlıkla başvurunu AlazEdu ile tamamla.
+            Birleşik Krallık yükseköğretim sektörü, en dinamik dönemlerinden birini yaşıyor. İngiltere, sadece akademik bir merkez değil; mezuniyet sonrası 2 yıllık <b style={{ color: 'var(--txt)' }}>Graduate Route</b> çalışma hakkı ve küresel yetenek vizeleriyle kariyer odaklı bir fırlatma rampası. Lisans çoğunlukla 3 yıl, yüksek lisans 1 yıldır. Aşağıdan şehir veya bölüme göre filtreleyerek hedefine uygun üniversiteyi bul; ücretsiz danışmanlıkla başvurunu AlazEdu ile tamamla.
           </p>
         </div>
       </section>
-
       <section className="sec" style={{ paddingTop: 36 }}>
         <div className="wrap" style={{ marginBottom: 8, color: 'var(--mut2)', fontSize: 13 }}>
           <a href="/">Ana Sayfa</a> <span style={{ color: 'var(--gold)' }}>/</span> Üniversiteler <span style={{ color: 'var(--gold)' }}>/</span> <span style={{ color: 'var(--gold)' }}>İngiltere Üniversiteleri</span>
         </div>
         <UniGrid unis={slim} cities={cities} />
       </section>
-
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[1] }} />
     </>
   )
