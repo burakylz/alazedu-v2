@@ -4,50 +4,51 @@ import path from 'path'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import data from '../universities.json'
+import DetailPrograms from './DetailPrograms'
 
 type Prog = { n: string; lvl: string; aw: string; f: string; d: string; ielts: string; fee: number }
-type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; ielts: string[]; prior: string[]; programs: Prog[] }
+type Uni = { slug: string; name: string; city: string; qs: string; ogr: string; rank: number; img: string; ielts: string[]; prior: string[]; programs: Prog[] }
 const unis = (data as any).universities as Uni[]
 const nav = fs.readFileSync(path.join(process.cwd(), 'app', 'partials.html'), 'utf8')
 
-export function generateStaticParams() {
-  return unis.map((u) => ({ slug: u.slug }))
-}
+export function generateStaticParams() { return unis.map((u) => ({ slug: u.slug })) }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const u = unis.find((x) => x.slug === params.slug)
   if (!u) return { title: 'Üniversite Bulunamadı' }
   return {
     title: `${u.name} — ${u.programs.length} Program, Ücretler ve Kabul Şartları`,
-    description: `${u.name} (${u.city}, İngiltere) lisans programları, yıllık ücretleri ve kabul şartları. AlazEdu danışmanlığıyla başvur.`,
+    description: `${u.name} (${u.city}, İngiltere) lisans programları, yıllık ücretleri, Foundation ve kabul şartları. AlazEdu danışmanlığıyla başvur.`,
     alternates: { canonical: `https://www.alazedu.com/universiteler/${u.slug}` },
   }
 }
 
-function fee(n: number) { return n > 0 ? '£' + n.toLocaleString('tr-TR') + '/yıl' : 'Bilgi için sor' }
-
 export default function Page({ params }: { params: { slug: string } }) {
   const u = unis.find((x) => x.slug === params.slug)
   if (!u) notFound()
-  const fields: Record<string, Prog[]> = {}
-  for (const p of u.programs) { const k = p.f || 'Diğer'; (fields[k] = fields[k] || []).push(p) }
-  const fieldNames = Object.keys(fields).sort()
   const minFee = Math.min(...u.programs.map((p) => p.fee).filter((x) => x > 0))
+  const ini = u.name.replace(/^(The )?University of /, '').slice(0, 2).toUpperCase()
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
-      <header style={{ padding: '54px 0 30px', borderBottom: '1px solid var(--line)' }}>
+      <header style={{ padding: '48px 0 34px', borderBottom: '1px solid var(--line)' }}>
         <div className="wrap">
-          <div style={{ color: 'var(--mut2)', fontSize: 13, marginBottom: 16 }}>
+          <div style={{ color: 'var(--mut2)', fontSize: 13, marginBottom: 20 }}>
             <Link href="/">Ana Sayfa</Link> <span style={{ color: 'var(--gold)' }}>›</span> <Link href="/universiteler">Üniversiteler</Link> <span style={{ color: 'var(--gold)' }}>›</span> {u.name}
           </div>
-          <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 46, lineHeight: 1.08, letterSpacing: '-.01em' }}>{u.name}</h1>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 22, margin: '20px 0 6px', color: 'var(--mut)', fontSize: 15 }}>
-            <span>📍 {u.city}, İngiltere</span>
-            {u.qs !== '—' && <span>🏆 QS Dünya Sıralaması <b style={{ color: 'var(--txt)' }}>#{u.qs}</b></span>}
-            <span>🎓 <b style={{ color: 'var(--txt)' }}>{u.programs.length}</b> program</span>
-            {u.ogr && <span>👥 <b style={{ color: 'var(--txt)' }}>{u.ogr}</b> Türk öğrenci</span>}
-            {isFinite(minFee) && <span>💷 <b style={{ color: 'var(--gold)' }}>£{minFee.toLocaleString('tr-TR')}</b>'den başlayan yıllık ücret</span>}
+          <div style={{ display: 'flex', gap: 26, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ width: 104, height: 104, borderRadius: 18, background: '#f3f1ea', display: 'grid', placeItems: 'center', flexShrink: 0, padding: 14 }}>
+              {u.img ? <img src={u.img} alt={u.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} /> : <span style={{ fontFamily: 'Fraunces,serif', fontSize: 32, fontWeight: 600, color: '#0a1426' }}>{ini}</span>}
+            </div>
+            <div>
+              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 42, lineHeight: 1.08, letterSpacing: '-.01em' }}>{u.name}</h1>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 12, color: 'var(--mut)', fontSize: 15 }}>
+                <span>📍 {u.city}, İngiltere</span>
+                {u.qs !== '—' && <span>🏆 QS <b style={{ color: 'var(--txt)' }}>#{u.qs}</b></span>}
+                <span>🎓 <b style={{ color: 'var(--txt)' }}>{u.programs.length}</b> program</span>
+                {isFinite(minFee) && <span>💷 <b style={{ color: 'var(--gold)' }}>£{minFee.toLocaleString('tr-TR')}</b>'den/yıl</span>}
+              </div>
+            </div>
           </div>
           <div style={{ display: 'flex', gap: 14, marginTop: 26 }}>
             <button className="btn-gold">Başvuru Danışmanlığı Al</button>
@@ -56,44 +57,30 @@ export default function Page({ params }: { params: { slug: string } }) {
         </div>
       </header>
 
-      {(u.ielts.length > 0 || u.prior.length > 0) && (
-        <section className="sec" style={{ paddingTop: 56, paddingBottom: 0 }}>
-          <div className="wrap">
-            <div className="eyebrow" style={{ marginBottom: 18 }}>Kabul Şartları</div>
-            <div className="why">
-              {u.prior[0] && <div className="w"><b>Akademik Şart</b><span>{u.prior[0]}</span></div>}
-              {u.ielts[0] && <div className="w"><b>İngilizce (IELTS)</b><span>{u.ielts.join(' · ')}</span></div>}
-              <div className="w"><b>Başvuru Dönemi</b><span>Eylül 2026 girişi · son başvuru yaz aylarında</span></div>
-              <div className="w"><b>Gerekli Belgeler</b><span>CV, pasaport, transkript, SOP ve referans mektupları</span></div>
+      <section className="sec" style={{ paddingTop: 50, paddingBottom: 0 }}>
+        <div className="wrap">
+          <div style={{ background: 'var(--gold-soft)', border: '1px solid rgba(216,180,99,.3)', borderRadius: 16, padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 24 }}>
+            <span style={{ fontSize: 22 }}>🎓</span>
+            <div>
+              <b style={{ fontSize: 16 }}>Türk lise diplomasıyla başvuru — Foundation gerekli mi?</b>
+              <p style={{ color: 'var(--mut)', fontSize: 14.5, marginTop: 6 }}>Türk lise diplomasıyla çoğu lisans programına <b style={{ color: 'var(--txt)' }}>doğrudan giriş genelde mümkün değildir</b>; bu üniversitede çoğu bölüm için <b style={{ color: 'var(--txt)' }}>1 yıllık Foundation (hazırlık) yılı</b> gerekir. IB veya A-Level gibi uluslararası diplomalar doğrudan kabul edilebilir. Senin durumunu birlikte değerlendirelim.</p>
             </div>
           </div>
-        </section>
-      )}
+          <div className="why">
+            <div className="w"><b>İngilizce (IELTS)</b><span>{u.ielts[0] ? u.ielts.join(' · ') : 'Programa göre IELTS 6.0–7.0'}</span></div>
+            <div className="w"><b>Başvuru Dönemi</b><span>Eylül 2026 girişi · başvurular yaz aylarında kapanır</span></div>
+            <div className="w"><b>Gerekli Belgeler</b><span>CV, pasaport & kimlik, lise diploması + transkript (yeminli tercüme), SOP, en az 1 akademik referans, varsa IELTS</span></div>
+            <div className="w"><b>Süreç</b><span>Belge → başvuru → ön kabul → vize → konaklama; tümünü AlazEdu yönetir</span></div>
+          </div>
+        </div>
+      </section>
 
       <section className="sec"><div className="wrap">
         <div className="eyebrow" style={{ marginBottom: 8 }}>Programlar</div>
-        <h2 style={{ marginBottom: 30 }}>{u.programs.length} program · {fieldNames.length} alan</h2>
-        {fieldNames.map((fn) => (
-          <div key={fn} style={{ marginBottom: 34 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.1em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 14, paddingBottom: 10, borderBottom: '1px solid var(--line)' }}>{fn} <span style={{ color: 'var(--mut2)', fontWeight: 400 }}>· {fields[fn].length}</span></div>
-            <div style={{ display: 'grid', gap: 10 }}>
-              {fields[fn].map((p, i) => (
-                <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 12, padding: '14px 18px' }}>
-                  <div>
-                    <div style={{ fontWeight: 500, fontSize: 15.5 }}>{p.n} {p.aw && <span style={{ color: 'var(--mut2)', fontWeight: 400 }}>· {p.aw}</span>}</div>
-                    <div style={{ color: 'var(--mut2)', fontSize: 13, marginTop: 3 }}>{[p.d, p.ielts].filter(Boolean).join(' · ')}</div>
-                  </div>
-                  <div style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
-                    <div style={{ color: 'var(--gold)', fontWeight: 600, fontSize: 14 }}>{fee(p.fee)}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+        <h2 style={{ marginBottom: 24 }}>Bölümler & ücretler</h2>
+        <DetailPrograms programs={u.programs} />
         <p style={{ color: 'var(--mut2)', fontSize: 13, marginTop: 8 }}>Ücretler 2026 girişi uluslararası öğrenci tahminleridir; kesin tutar ve şartlar için ücretsiz danışmanlık al.</p>
       </div></section>
-
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[1] }} />
     </>
   )
