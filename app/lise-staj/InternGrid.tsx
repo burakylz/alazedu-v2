@@ -60,7 +60,7 @@ export default function InternGrid({ programs, categories }: { programs: P[]; ca
 
       <style>{`
         .fl{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--mut2);text-transform:uppercase;margin-bottom:8px}
-        .fi{width:100%;height:40px;background:rgba(8,16,30,.55);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:0 12px;font-size:14px;font-family:inherit}
+        .fi{width:100%;height:40px;background:rgba(14,28,52,.05);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:0 12px;font-size:14px;font-family:inherit}
         .fi::placeholder{color:var(--mut2)}
         .scard{display:block;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);transition:transform .22s,border-color .22s}
         .scard:hover{transform:translateY(-5px);border-color:var(--line2)}
