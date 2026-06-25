@@ -30,7 +30,8 @@ export default function YazOkullari() {
         .ustats{display:flex;gap:34px;margin-top:26px}
         .ustats b{font-family:Fraunces,serif;font-size:40px;color:var(--gold);display:block;line-height:1}
         .ustats span{font-size:14px;color:var(--mut)}
-        @media(max-width:760px){.uhero-grid{grid-template-columns:1fr}.uhero-collage{height:240px}}
+        .uhero-grid h1{font-size:54px;line-height:1.04}
+        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:31px}.uhero-collage{height:230px}.ustats{gap:22px}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
 
@@ -39,7 +40,7 @@ export default function YazOkullari() {
           <div className="uhero-grid">
             <div>
               <div className="eyebrow">Yaz Okulları</div>
-              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 54, lineHeight: 1.04, letterSpacing: '-.015em', margin: '16px 0 0' }}>İngiltere Yaz Okulları 2026</h1>
+              <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, letterSpacing: '-.015em', margin: '16px 0 0' }}>İngiltere Yaz Okulları 2026</h1>
               <div className="ustats">
                 <div><b>{schools.length}</b><span>Kamp / program</span></div>
                 <div><b>{cities.length}</b><span>Lokasyon</span></div>

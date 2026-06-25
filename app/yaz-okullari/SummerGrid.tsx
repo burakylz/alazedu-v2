@@ -55,7 +55,7 @@ export default function SummerGrid({ schools, cities }: { schools: S[]; cities: 
 
       <div>
         <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> yaz okulu / kamp{age && !isNaN(ageN) ? ` · ${ageN} yaş için` : ''}</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(258px,1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(258px,100%),1fr))', gap: 20 }}>
           {filtered.map((s) => (
             <Link key={s.slug} href={`/yaz-okullari/${s.slug}`} className="scard">
               <div className="ph">
