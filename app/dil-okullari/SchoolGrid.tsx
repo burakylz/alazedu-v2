@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-type S = { slug: string; name: string; city: string; logo: string; priceWk: number; minAge: number | null; avgClass: string | null; cap: number | null }
+type S = { slug: string; name: string; city: string; logo: string; photo: string; priceWk: number; minAge: number | null; avgClass: string | null; cap: number | null }
 
 export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: string[] }) {
   const [sel, setSel] = useState<string[]>([])
@@ -15,7 +15,6 @@ export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: 
   )
   filtered = [...filtered].sort((a, b) => (sort === 'price' ? a.priceWk - b.priceWk : a.name.localeCompare(b.name, 'tr')))
   const shownCities = cities.filter((c) => c.toLowerCase().includes(cityQ.toLowerCase()))
-  const ini = (n: string) => n.replace(/[^A-Za-zÇĞİÖŞÜ ]/g, '').trim().split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()
   return (
     <div className="wrap dwrap" style={{ display: 'grid', gridTemplateColumns: '262px 1fr', gap: 30, alignItems: 'start' }}>
       <aside className="dfilter" style={{ position: 'sticky', top: 90, background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 18, padding: '20px 20px 24px' }}>
@@ -47,19 +46,19 @@ export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: 
 
       <div>
         <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> dil okulu</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(248px,1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(258px,1fr))', gap: 20 }}>
           {filtered.map((s) => (
             <Link key={s.slug} href={`/dil-okullari/${s.slug}`} className="scard">
-              <div className="logo">
+              <div className="ph">
+                <img className="bg" src={s.photo} alt={`${s.city}, İngiltere`} loading="lazy" />
                 <span className="pr">£{s.priceWk}/hafta'dan</span>
-                {s.logo ? <img src={s.logo} alt={s.name} loading="lazy" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; const sib = e.currentTarget.nextElementSibling as HTMLElement; if (sib) sib.style.display = 'block' }} /> : null}
-                <span className="ini" style={{ display: s.logo ? 'none' : 'block' }}>{ini(s.name)}</span>
+                {s.logo ? <span className="lg"><img src={s.logo} alt="" loading="lazy" onError={(e) => { const p = (e.currentTarget.closest('.lg') as HTMLElement); if (p) p.style.display = 'none' }} /></span> : null}
+                <div className="ov">
+                  <h4>{s.name}</h4>
+                  <div className="loc">İngiltere · {s.city}</div>
+                </div>
               </div>
-              <div className="body">
-                <h4>{s.name}</h4>
-                <div className="loc">İngiltere · {s.city}</div>
-                <div className="meta">{s.minAge ? `Min ${s.minAge} yaş` : ''}{s.avgClass ? ` · Sınıf ${s.avgClass}` : ''}</div>
-              </div>
+              <div className="body">{[s.minAge ? `Min ${s.minAge} yaş` : '', s.avgClass ? `Sınıf ${s.avgClass}` : '', s.cap ? `${s.cap} öğrenci` : ''].filter(Boolean).join(' · ')}</div>
             </Link>
           ))}
         </div>
@@ -74,14 +73,16 @@ export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: 
         .sortb.on{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
         .scard{display:block;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);transition:transform .22s,border-color .22s}
         .scard:hover{transform:translateY(-5px);border-color:var(--line2)}
-        .scard .logo{position:relative;height:140px;background:#f3f1ea;display:grid;place-items:center;padding:24px}
-        .scard .logo img{max-height:84px;max-width:80%;object-fit:contain}
-        .scard .logo .ini{font-family:Fraunces,serif;font-size:34px;font-weight:600;color:#0a1426}
-        .scard .logo .pr{position:absolute;top:10px;right:10px;background:#0a1426;color:var(--gold);font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px}
-        .scard .body{padding:15px 18px 18px}
-        .scard h4{font-size:15.5px;font-weight:700;line-height:1.25}
-        .scard .loc{color:var(--mut2);font-size:13px;margin-top:5px}
-        .scard .meta{color:var(--mut);font-size:12.5px;margin-top:7px}
+        .scard .ph{position:relative;height:172px;overflow:hidden}
+        .scard .ph .bg{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+        .scard:hover .ph .bg{transform:scale(1.07)}
+        .scard .ph .ov{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:30px 16px 13px;background:linear-gradient(to top,rgba(6,11,22,.92),rgba(6,11,22,.4) 60%,transparent)}
+        .scard .ph .ov h4{color:#fff;font-size:16px;font-weight:700;line-height:1.22}
+        .scard .ph .ov .loc{color:rgba(255,255,255,.82);font-size:12.5px;margin-top:3px}
+        .scard .ph .pr{position:absolute;top:10px;right:10px;z-index:2;background:rgba(10,20,38,.82);color:var(--gold);font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px;backdrop-filter:blur(4px)}
+        .scard .ph .lg{position:absolute;top:10px;left:10px;z-index:2;width:36px;height:36px;border-radius:9px;background:#fff;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+        .scard .ph .lg img{width:22px;height:22px;object-fit:contain}
+        .scard .body{padding:11px 16px;color:var(--mut);font-size:12.5px;min-height:20px}
         @media(max-width:820px){.dwrap{grid-template-columns:1fr}.dfilter{position:static}}
       `}</style>
     </div>

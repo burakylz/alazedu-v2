@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.alazedu.com/dil-okullari' },
 }
 
-type School = { slug: string; name: string; city: string; logo: string; priceWk: number; minAge: number | null; avgClass: string | null; cap: number | null }
+type School = { slug: string; name: string; city: string; logo: string; photo: string; priceWk: number; minAge: number | null; avgClass: string | null; cap: number | null }
 const schools = (data as any).schools as School[]
 const cities = (data as any).cities as string[]
 const nav = fs.readFileSync(path.join(process.cwd(), 'app', 'partials.html'), 'utf8')
@@ -23,7 +23,7 @@ const priceTable: [string, string, string, string, string][] = [
 ]
 
 export default function DilOkullari() {
-  const slim = schools.map((s) => ({ slug: s.slug, name: s.name, city: s.city, logo: s.logo, priceWk: s.priceWk, minAge: s.minAge, avgClass: s.avgClass, cap: s.cap }))
+  const slim = schools.map((s) => ({ slug: s.slug, name: s.name, city: s.city, logo: s.logo, photo: s.photo, priceWk: s.priceWk, minAge: s.minAge, avgClass: s.avgClass, cap: s.cap }))
   return (
     <>
       <style>{`
