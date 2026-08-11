@@ -7,7 +7,7 @@ import { guides } from './rehberler/guides'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://www.alazedu.com'
-  const top = ['', '/universiteler', '/dil-okullari', '/yaz-okullari', '/lise-staj', '/rehberler', '/hakkimizda', '/iletisim']
+  const top = ['', '/universiteler', '/dil-okullari', '/yaz-okullari', '/lise-staj', '/rehberler', '/hazirlik-programlari', '/ocak-kayitlari', '/hakkimizda', '/iletisim']
   const uniRoutes = ((unis as any).universities as any[]).map((u) => `/universiteler/${u.slug}`)
   const dilRoutes = ((dil as any).schools as any[]).map((s) => `/dil-okullari/${s.slug}`)
   const yazRoutes = ((yaz as any).schools as any[]).map((s) => `/yaz-okullari/${s.slug}`)
