@@ -6,7 +6,7 @@ import SchoolGrid from './SchoolGrid'
 
 export const metadata: Metadata = {
   title: 'İngiltere Dil Okulları — 2026 Fiyatları, Şehirler ve Kabul Şartları',
-  description: "İngiltere'deki British Council akrediteli dil okulları; şehir ve bütçeye göre filtrele, 2026 fiyatlarını ve konaklama seçeneklerini incele, AlazEdu ile ücretsiz danışmanlık al.",
+  description: "İngiltere'deki British Council akrediteli dil okulları; şehir ve bütçeye göre filtrele, 2026 fiyatlarını ve konaklama seçeneklerini incele, AlazEdu ile danışmanlık al.",
   alternates: { canonical: 'https://www.alazedu.com/dil-okullari' },
 }
 
@@ -72,7 +72,7 @@ export default function DilOkullari() {
         <div className="wrap" style={{ maxWidth: 880, textAlign: 'center', margin: '0 auto' }}>
           <h2 style={{ marginBottom: 16 }}>İngiltere'de dil eğitimi 2026</h2>
           <p style={{ color: 'var(--mut)', fontSize: 16.5, lineHeight: 1.8 }}>
-            İngiltere, İngilizcenin anavatanı olması ve British Council denetimindeki yüksek eğitim standartlarıyla dil eğitiminin merkezidir. Genel İngilizce'den IELTS hazırlığına, iş İngilizcesinden akademik döneme kadar geniş bir program yelpazesi; haftada 15 saatlik standart kurslardan 30 saatlik yoğun programlara uzanan esnek seçenekler sunar. Aşağıdan şehir veya bütçeye göre filtreleyerek sana uygun okulu bul, AlazEdu ile ücretsiz danışmanlık alarak başvurunu tamamla.
+            İngiltere, İngilizcenin anavatanı olması ve British Council denetimindeki yüksek eğitim standartlarıyla dil eğitiminin merkezidir. Genel İngilizce'den IELTS hazırlığına, iş İngilizcesinden akademik döneme kadar geniş bir program yelpazesi; haftada 15 saatlik standart kurslardan 30 saatlik yoğun programlara uzanan esnek seçenekler sunar. Aşağıdan şehir veya bütçeye göre filtreleyerek sana uygun okulu bul, AlazEdu ile danışmanlık alarak başvurunu tamamla.
           </p>
         </div>
       </section>
@@ -87,7 +87,7 @@ export default function DilOkullari() {
       <section className="sec"><div className="wrap" style={{ maxWidth: 920, margin: '0 auto' }}>
         <div className="eyebrow" style={{ marginBottom: 8 }}>Fiyatlar</div>
         <h2 style={{ marginBottom: 6 }}>İngiltere dil okulu 2026 fiyatları</h2>
-        <p style={{ color: 'var(--mut)', fontSize: 15.5, lineHeight: 1.75 }}>Fiyatlar; seçilen okula, haftalık ders yoğunluğuna ve şehre göre değişir. Eğitim süresi uzadıkça haftalık birim maliyet düşer. Aşağıdaki tutarlar 2026 girişi için tahminîdir (GBP); kesin fiyat için ücretsiz danışmanlık al.</p>
+        <p style={{ color: 'var(--mut)', fontSize: 15.5, lineHeight: 1.75 }}>Fiyatlar; seçilen okula, haftalık ders yoğunluğuna ve şehre göre değişir. Eğitim süresi uzadıkça haftalık birim maliyet düşer. Aşağıdaki tutarlar 2026 girişi için tahminîdir (GBP); kesin fiyat için danışmanlık al.</p>
         <div style={{ overflowX: 'auto' }}>
           <table className="ptable">
             <thead><tr><th>Şehir</th><th>4 Hafta</th><th>12 Hafta</th><th>24 Hafta</th><th>Aylık Konaklama</th></tr></thead>
@@ -116,6 +116,25 @@ export default function DilOkullari() {
           <div className="why"><div className="w"><b>Kısa Süreli Öğrenci Vizesi</b><span>6–11 ay arası dil programları için gereklidir; sadece İngilizce eğitimi alan öğrencilere verilir.</span></div></div>
         </div>
         <p style={{ color: 'var(--mut)', fontSize: 15, lineHeight: 1.75, marginTop: 18 }}>Gerekli temel evraklar: akredite okuldan alınan <b style={{ color: 'var(--txt)' }}>kabul mektubu</b>, eğitim ve yaşam masraflarını gösteren <b style={{ color: 'var(--txt)' }}>banka dökümleri</b> (son 3–6 ay) ve <b style={{ color: 'var(--txt)' }}>niyet mektubu</b>. Vize süreci genellikle 3–4 haftadır. Tüm süreci AlazEdu yönetir.</p>
+      </div></section>
+
+      <section className="sec" style={{ paddingTop: 0 }}><div className="wrap" style={{ maxWidth: 920, margin: '0 auto' }}>
+        <div className="eyebrow" style={{ marginBottom: 8, textAlign: 'center' }}>SSS</div>
+        <h2 style={{ marginBottom: 28, textAlign: 'center' }}>İngiltere dil okulu hakkında merak edilenler</h2>
+        <div className="faq">
+          <details open><summary>İngiltere dil okulu fiyatlarına neler dahil?<span className="pl">+</span></summary><div className="a">Okul ücreti temel olarak <b style={{ color: 'var(--txt)' }}>ders programını</b> kapsar. AlazEdu tarafında ise okul ve şehir seçimi, kabul mektubunun alınması, vize başvuru rehberliği ve İngiltere'ye vardığında oryantasyon desteği fiyata ek bir maliyet olmadan sunulur. Konaklama, uçak bileti ve kişisel harcamalar ücrete dahil değildir; bunları da bütçene göre birlikte planlarız.</div></details>
+          <details><summary>Ne zaman başvurmalıyım?<span className="pl">+</span></summary><div className="a">Dil okullarının sabit bir başvuru tarihi yoktur; çoğu okul yıl boyunca her Pazartesi giriş kabul eder. Vize gerektiren programlarda, başlamak istediğin tarihten <b style={{ color: 'var(--txt)' }}>en az 4–6 hafta önce</b> başvurunu tamamlamanı öneririz. Yoğun dönemlerde (yaz) yer ve konaklama için daha erken planlamak avantajlıdır.</div></details>
+          <details><summary>Kabul şartları neler? IELTS gerekiyor mu?<span className="pl">+</span></summary><div className="a">Genel İngilizce kurslarında sınav şartı yoktur; her seviyeden ve her yaştan öğrenci katılabilir. Okul, ilk gün yaptığı <b style={{ color: 'var(--txt)' }}>seviye tespit sınavıyla</b> seni uygun sınıfa yerleştirir. IELTS yalnızca akademik/sınav hazırlık programlarında hedef olarak istenir.</div></details>
+          <details><summary>Dil okulu öğrencisi İngiltere'de çalışabilir mi?<span className="pl">+</span></summary><div className="a">Kısa süreli dil eğitimleri için alınan <b style={{ color: 'var(--txt)' }}>ziyaretçi/kısa dönem öğrenci vizeleri çalışma izni vermez</b>. Haftalık part-time çalışma hakkı genellikle uzun dönem (Student Route) akademik programlara özgüdür ve standart dil kurslarını kapsamaz. Amacın çalışmaksa doğru rota için danışmanla görüşmelisin.</div></details>
+          <details><summary>Ne kadar sürede İngilizce öğrenilir?<span className="pl">+</span></summary><div className="a">Kişiye göre değişmekle birlikte genel bir çerçeve: temel seviye için <b style={{ color: 'var(--txt)' }}>3–6 ay</b>, rahat konuşma için <b style={{ color: 'var(--txt)' }}>6–12 ay</b>. İngilizce konuşulan bir ortamda yoğun programa katılmak ve günlük pratik yapmak süreci belirgin biçimde kısaltır.</div></details>
+          <details><summary>Eğitim maliyeti yaklaşık ne kadar?<span className="pl">+</span></summary><div className="a">Haftalık ders ücretleri okul, şehir ve ders yoğunluğuna göre genelde <b style={{ color: 'var(--txt)' }}>£195–£500</b> aralığındadır; süre uzadıkça haftalık birim maliyet düşer. Londra gibi büyük şehirlerde ücretler daha yüksek, küçük şehirlerde daha uygundur. Bunlara konaklama ve yaşam masrafları eklenir.</div></details>
+          <details><summary>Vize için hesapta ne kadar para olmalı?<span className="pl">+</span></summary><div className="a">Vize gerektiren programlarda, geçimini karşılayabildiğini göstermen istenir. Güncel UKVI kriterlerine göre aylık yaşam fonu <b style={{ color: 'var(--txt)' }}>Londra'da ~£1.334</b>, Londra dışında <b style={{ color: 'var(--txt)' }}>~£1.023</b> olarak hesaplanır ve eğitim süresiyle çarpılır. Kesin tutar süreye ve şehre göre değişir; başvurudan önce birlikte netleştiririz.</div></details>
+          <details><summary>Hangi vize gerekiyor, uzun süre kalabilir miyim?<span className="pl">+</span></summary><div className="a">6 aya kadar dil eğitimleri genelde <b style={{ color: 'var(--txt)' }}>Standart Ziyaretçi Vizesi</b> ile mümkündür. 6–11 ay arası için <b style={{ color: 'var(--txt)' }}>Kısa Süreli Öğrenci Vizesi</b> gerekir. Daha uzun süre kalış ve sınırlı çalışma hakkı ise akademik Student Route vizesine bağlıdır. Sana en uygun rotayı hedefine göre belirleriz.</div></details>
+          <details><summary>İngiltere'nin öne çıkan dil okulları hangileri?<span className="pl">+</span></summary><div className="a">British Council akreditasyonlu, uluslararası öğrencilerin sık tercih ettiği kurumlardan bazıları: Kaplan International, EC English, St Giles, Stafford House, LSI, Kings Education ve English Path. Yukarıdaki listeden şehir ve bütçene göre filtreleyerek sana en uygun okulu seçebilir, kararsız kaldığın noktada danışmanlık alabilirsin.</div></details>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 34 }}>
+          <a href="/iletisim?konu=dil-okulu"><button className="btn-gold">Dil okulu için danışmanlık al</button></a>
+        </div>
       </div></section>
 
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[1] }} />

@@ -1,71 +1,132 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 
 type S = { slug: string; name: string; city: string; logo: string; photo: string; priceWk: number; minAge: number | null; avgClass: string | null; cap: number | null }
+
+const durations = ['2–4 hafta', '1–3 ay', '3–6 ay', '6 ay ve üzeri']
+const months = ['Eylül 2026', 'Ekim 2026', 'Kasım 2026', 'Ocak 2027', 'Şubat 2027', 'Mart 2027', 'Nisan 2027']
 
 export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: string[] }) {
   const [sel, setSel] = useState<string[]>([])
   const [q, setQ] = useState('')
   const [cityQ, setCityQ] = useState('')
   const [sort, setSort] = useState<'name' | 'price'>('name')
+  const [bCity, setBCity] = useState('')
+  const [bDur, setBDur] = useState('')
+  const [bDate, setBDate] = useState('')
+  const resRef = useRef<HTMLDivElement>(null)
+
   const toggle = (c: string) => setSel((s) => (s.includes(c) ? s.filter((x) => x !== c) : [...s, c]))
+  const runSearch = () => {
+    setSel(bCity ? [bCity] : [])
+    resRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+  const cta = `/iletisim?konu=dil-okulu${bCity ? `&sehir=${encodeURIComponent(bCity)}` : ''}${bDur ? `&sure=${encodeURIComponent(bDur)}` : ''}${bDate ? `&tarih=${encodeURIComponent(bDate)}` : ''}`
+
   let filtered = schools.filter(
     (s) => (sel.length === 0 || sel.includes(s.city)) && (q === '' || s.name.toLowerCase().includes(q.toLowerCase()))
   )
   filtered = [...filtered].sort((a, b) => (sort === 'price' ? a.priceWk - b.priceWk : a.name.localeCompare(b.name, 'tr')))
   const shownCities = cities.filter((c) => c.toLowerCase().includes(cityQ.toLowerCase()))
-  return (
-    <div className="wrap dwrap" style={{ display: 'grid', gridTemplateColumns: '262px 1fr', gap: 30, alignItems: 'start' }}>
-      <aside className="dfilter" style={{ position: 'sticky', top: 90, background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 18, padding: '20px 20px 24px' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--gold-soft)', color: 'var(--gold)', borderRadius: 999, padding: '6px 14px', fontSize: 13, fontWeight: 600, marginBottom: 18 }}>🇬🇧 İngiltere</div>
-        <div className="fl">Okul ara</div>
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Okul adı ara…" className="fi" />
-        <div className="fl" style={{ marginTop: 18 }}>Sırala</div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={() => setSort('name')} className={'sortb' + (sort === 'name' ? ' on' : '')}>A–Z</button>
-          <button onClick={() => setSort('price')} className={'sortb' + (sort === 'price' ? ' on' : '')}>Fiyat ↑</button>
-        </div>
-        <div className="fl" style={{ marginTop: 18 }}>Şehirler</div>
-        <input value={cityQ} onChange={(e) => setCityQ(e.target.value)} placeholder="Şehir ara…" className="fi" />
-        <div style={{ maxHeight: 280, overflowY: 'auto', display: 'grid', gap: 4, marginTop: 8 }}>
-          {shownCities.map((c) => {
-            const on = sel.includes(c)
-            const n = schools.filter((s) => s.city === c).length
-            return (
-              <label key={c} onClick={() => toggle(c)} style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: 14, color: on ? 'var(--txt)' : 'var(--mut)', padding: '5px 0', cursor: 'pointer' }}>
-                <span style={{ width: 18, height: 18, borderRadius: 5, border: '1px solid ' + (on ? 'var(--gold)' : 'var(--line2)'), background: on ? 'var(--gold-soft)' : 'transparent', color: 'var(--gold)', display: 'grid', placeItems: 'center', fontSize: 11 }}>{on ? '✓' : ''}</span>
-                <span style={{ flex: 1 }}>{c}</span>
-                <span style={{ color: 'var(--mut2)', fontSize: 12 }}>{n}</span>
-              </label>
-            )
-          })}
-        </div>
-        {(sel.length > 0 || q) && <button onClick={() => { setSel([]); setQ('') }} style={{ marginTop: 16, background: 'none', border: 'none', color: 'var(--gold)', fontSize: 13, fontWeight: 600, cursor: 'pointer', padding: 0 }}>Filtreleri sıfırla</button>}
-      </aside>
 
-      <div>
-        <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> dil okulu</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(258px,100%),1fr))', gap: 20 }}>
-          {filtered.map((s) => (
-            <Link key={s.slug} href={`/dil-okullari/${s.slug}`} className="scard">
-              <div className="ph">
-                <img className="bg" src={s.photo} alt={`${s.city}, İngiltere`} loading="lazy" />
-                <span className="pr">£{s.priceWk}/hafta'dan</span>
-                {s.logo ? <span className="lg"><img src={s.logo} alt="" loading="lazy" onError={(e) => { const p = (e.currentTarget.closest('.lg') as HTMLElement); if (p) p.style.display = 'none' }} /></span> : null}
-                <div className="ov">
-                  <h4>{s.name}</h4>
-                  <div className="loc">İngiltere · {s.city}</div>
-                </div>
-              </div>
-              <div className="body">{[s.minAge ? `Min ${s.minAge} yaş` : '', s.avgClass ? `Sınıf ${s.avgClass}` : '', s.cap ? `${s.cap} öğrenci` : ''].filter(Boolean).join(' · ')}</div>
-            </Link>
-          ))}
+  return (
+    <>
+      <div className="searchbar">
+        <div className="sbfield">
+          <label>Şehir</label>
+          <select value={bCity} onChange={(e) => setBCity(e.target.value)}>
+            <option value="">Tüm şehirler</option>
+            {cities.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
         </div>
-        {filtered.length === 0 && <p style={{ color: 'var(--mut2)', padding: '40px 0', textAlign: 'center' }}>Bu filtreyle okul bulunamadı.</p>}
+        <div className="sbfield">
+          <label>Program süresi</label>
+          <select value={bDur} onChange={(e) => setBDur(e.target.value)}>
+            <option value="">Süre seç</option>
+            {durations.map((d) => <option key={d} value={d}>{d}</option>)}
+          </select>
+        </div>
+        <div className="sbfield">
+          <label>Başlangıç tarihi</label>
+          <select value={bDate} onChange={(e) => setBDate(e.target.value)}>
+            <option value="">Tarih seç</option>
+            {months.map((m) => <option key={m} value={m}>{m}</option>)}
+          </select>
+        </div>
+        <button className="sbbtn" onClick={runSearch}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
+          Okulları Gör
+        </button>
+      </div>
+      {(bCity || bDur || bDate) && (
+        <div className="sbsum">
+          <span>Seçimin: <b>{[bCity || 'Tüm şehirler', bDur, bDate].filter(Boolean).join(' · ')}</b></span>
+          <Link href={cta} className="sbcta">Bu kriterlerle danışmanlık al →</Link>
+        </div>
+      )}
+
+      <div ref={resRef} className="wrap dwrap" style={{ display: 'grid', gridTemplateColumns: '262px 1fr', gap: 30, alignItems: 'start', scrollMarginTop: 84 }}>
+        <aside className="dfilter" style={{ position: 'sticky', top: 90, background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 18, padding: '20px 20px 24px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--gold-soft)', color: 'var(--gold)', borderRadius: 999, padding: '6px 14px', fontSize: 13, fontWeight: 600, marginBottom: 18 }}>🇬🇧 İngiltere</div>
+          <div className="fl">Okul ara</div>
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Okul adı ara…" className="fi" />
+          <div className="fl" style={{ marginTop: 18 }}>Sırala</div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={() => setSort('name')} className={'sortb' + (sort === 'name' ? ' on' : '')}>A–Z</button>
+            <button onClick={() => setSort('price')} className={'sortb' + (sort === 'price' ? ' on' : '')}>Fiyat ↑</button>
+          </div>
+          <div className="fl" style={{ marginTop: 18 }}>Şehirler</div>
+          <input value={cityQ} onChange={(e) => setCityQ(e.target.value)} placeholder="Şehir ara…" className="fi" />
+          <div style={{ maxHeight: 280, overflowY: 'auto', display: 'grid', gap: 4, marginTop: 8 }}>
+            {shownCities.map((c) => {
+              const on = sel.includes(c)
+              const n = schools.filter((s) => s.city === c).length
+              return (
+                <label key={c} onClick={() => toggle(c)} style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: 14, color: on ? 'var(--txt)' : 'var(--mut)', padding: '5px 0', cursor: 'pointer' }}>
+                  <span style={{ width: 18, height: 18, borderRadius: 5, border: '1px solid ' + (on ? 'var(--gold)' : 'var(--line2)'), background: on ? 'var(--gold-soft)' : 'transparent', color: 'var(--gold)', display: 'grid', placeItems: 'center', fontSize: 11 }}>{on ? '✓' : ''}</span>
+                  <span style={{ flex: 1 }}>{c}</span>
+                  <span style={{ color: 'var(--mut2)', fontSize: 12 }}>{n}</span>
+                </label>
+              )
+            })}
+          </div>
+          {(sel.length > 0 || q) && <button onClick={() => { setSel([]); setQ('') }} style={{ marginTop: 16, background: 'none', border: 'none', color: 'var(--gold)', fontSize: 13, fontWeight: 600, cursor: 'pointer', padding: 0 }}>Filtreleri sıfırla</button>}
+        </aside>
+
+        <div>
+          <div style={{ marginBottom: 20, color: 'var(--mut)', fontSize: 14 }}><b style={{ color: 'var(--txt)' }}>{filtered.length}</b> dil okulu</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(258px,100%),1fr))', gap: 20 }}>
+            {filtered.map((s) => (
+              <Link key={s.slug} href={`/dil-okullari/${s.slug}`} className="scard">
+                <div className="ph">
+                  <img className="bg" src={s.photo} alt={`${s.city}, İngiltere`} loading="lazy" />
+                  <span className="pr">£{s.priceWk}/hafta'dan</span>
+                  {s.logo ? <span className="lg"><img src={s.logo} alt="" loading="lazy" onError={(e) => { const p = (e.currentTarget.closest('.lg') as HTMLElement); if (p) p.style.display = 'none' }} /></span> : null}
+                  <div className="ov">
+                    <h4>{s.name}</h4>
+                    <div className="loc">İngiltere · {s.city}</div>
+                  </div>
+                </div>
+                <div className="body">{[s.minAge ? `Min ${s.minAge} yaş` : '', s.avgClass ? `Sınıf ${s.avgClass}` : '', s.cap ? `${s.cap} öğrenci` : ''].filter(Boolean).join(' · ')}</div>
+              </Link>
+            ))}
+          </div>
+          {filtered.length === 0 && <p style={{ color: 'var(--mut2)', padding: '40px 0', textAlign: 'center' }}>Bu filtreyle okul bulunamadı.</p>}
+          <p style={{ color: 'var(--mut2)', fontSize: 12, marginTop: 22 }}>Şehir görselleri: Wikimedia Commons (CC BY-SA). Okul logoları ilgili kurumlara aittir.</p>
+        </div>
       </div>
 
       <style>{`
+        .searchbar{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:14px;align-items:end;background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:18px 20px;box-shadow:0 18px 40px -26px rgba(14,28,52,.4);margin-bottom:14px}
+        .sbfield{display:flex;flex-direction:column;gap:7px}
+        .sbfield label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2)}
+        .sbfield select{height:46px;background:rgba(14,28,52,.04);border:1px solid var(--line2);border-radius:11px;color:var(--txt);padding:0 12px;font-size:14.5px;font-family:inherit;cursor:pointer}
+        .sbbtn{height:46px;padding:0 22px;background:var(--gold);color:#fff;border:none;border-radius:11px;font-weight:700;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;white-space:nowrap;transition:transform .15s}
+        .sbbtn:hover{transform:translateY(-2px)}
+        .sbsum{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--gold-soft);border:1px solid rgba(184,134,43,.25);border-radius:12px;padding:11px 16px;margin-bottom:22px;font-size:14px;color:var(--mut)}
+        .sbsum b{color:var(--txt)}
+        .sbcta{color:var(--gold);font-weight:700;font-size:14px}
         .fl{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--mut2);text-transform:uppercase;margin-bottom:8px}
         .fi{width:100%;height:40px;background:rgba(14,28,52,.05);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:0 12px;font-size:14px;font-family:inherit}
         .fi::placeholder{color:var(--mut2)}
@@ -83,8 +144,9 @@ export default function SchoolGrid({ schools, cities }: { schools: S[]; cities: 
         .scard .ph .lg{position:absolute;top:10px;left:10px;z-index:2;width:36px;height:36px;border-radius:9px;background:#fff;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.25)}
         .scard .ph .lg img{width:22px;height:22px;object-fit:contain}
         .scard .body{padding:11px 16px;color:var(--mut);font-size:12.5px;min-height:20px}
-        @media(max-width:820px){.dwrap{grid-template-columns:1fr}.dfilter{position:static}}
+        @media(max-width:820px){.searchbar{grid-template-columns:1fr 1fr}.dwrap{grid-template-columns:1fr}.dfilter{position:static}}
+        @media(max-width:520px){.searchbar{grid-template-columns:1fr}}
       `}</style>
-    </div>
+    </>
   )
 }
