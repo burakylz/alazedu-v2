@@ -84,7 +84,7 @@ export default function ConsultForm() {
       </div>
       {st === 'err' && <p style={{ color: '#c0392b', fontSize: 14, marginTop: 14 }}>Lütfen ad ve en az bir iletişim bilgisi (telefon veya e-posta) gir. Sorun sürerse WhatsApp: +44 7749 849 668.</p>}
       <button className="btn-gold" type="submit" disabled={st === 'sending'} style={{ marginTop: 20, width: '100%', justifyContent: 'center', opacity: st === 'sending' ? .7 : 1 }}>
-        {st === 'sending' ? 'Gönderiliyor…' : 'Ücretsiz Danışmanlık Talebi Gönder'}
+        {st === 'sending' ? 'Gönderiliyor…' : 'Danışmanlık Talebi Gönder'}
       </button>
       <p style={{ color: 'var(--mut2)', fontSize: 12.5, marginTop: 12, textAlign: 'center' }}>Bilgilerin yalnızca danışmanlık için kullanılır; talebin danışman ekibimize iletilir.</p>
     </form>

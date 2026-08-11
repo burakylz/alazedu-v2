@@ -4,7 +4,7 @@ import path from 'path'
 import ConsultForm from './ConsultForm'
 
 export const metadata: Metadata = {
-  title: 'Ücretsiz Danışmanlık — AlazEdu',
+  title: 'Danışmanlık Al — AlazEdu',
   description: 'İngiltere’de üniversite, dil okulu, yaz okulu ve lise staj programları için ücretsiz danışmanlık. Sınıfını, İngilizce seviyeni ve ilgi alanını paylaş, danışmanlarımız seninle iletişime geçsin.',
   alternates: { canonical: 'https://www.alazedu.com/iletisim' },
 }
@@ -17,10 +17,10 @@ export default function Iletisim() {
       <section className="sec" style={{ paddingTop: 60, paddingBottom: 50 }}>
         <div className="wrap iletisimgrid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.05fr', gap: 48, alignItems: 'start' }}>
           <div>
-            <div className="eyebrow">Ücretsiz Danışmanlık</div>
+            <div className="eyebrow">Danışmanlık Al</div>
             <h1 style={{ fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 46, lineHeight: 1.08, letterSpacing: '-.015em', margin: '14px 0 16px' }}>Hayalindeki eğitime ilk adımı at</h1>
             <p style={{ color: 'var(--mut)', fontSize: 16.5, lineHeight: 1.8, maxWidth: 460 }}>
-              Formu doldur; sınıfına, İngilizce seviyene ve hedefine göre sana özel bir yol haritası çıkaralım. Danışmanlık tamamen <b style={{ color: 'var(--txt)' }}>ücretsizdir</b> ve başvuru ücreti yoktur.
+              Formu doldur; sınıfına, İngilizce seviyene ve hedefine göre sana özel bir yol haritası çıkaralım. Başvuru ücreti yoktur; süreç baştan sona <b style={{ color: 'var(--txt)' }}>şeffaftır</b>.
             </p>
             <div style={{ marginTop: 26, display: 'grid', gap: 14 }}>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', color: 'var(--mut)', fontSize: 15 }}>📍 İstanbul Taksim (merkez) + 5 ilde ofis · Londra, UK</div>
