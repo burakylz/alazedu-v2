@@ -60,9 +60,9 @@ export default function DilOkullari() {
               </div>
             </div>
             <div className="uhero-collage">
-              <div className="p"><img src="https://picsum.photos/seed/londonstreetuk/500/700" alt="" /></div>
-              <div className="p"><img src="https://picsum.photos/seed/englishclassroom/500/340" alt="" /></div>
-              <div className="p"><img src="https://picsum.photos/seed/ukseasidetown/500/340" alt="" /></div>
+              <div className="p"><img src="/img/okul-guildhouse.jpg" alt="Guildhouse School London ziyaretimiz" /></div>
+              <div className="p"><img src="/img/okul-kaplan.jpg" alt="Kaplan International London" /></div>
+              <div className="p"><img src="/img/okul-ic.jpg" alt="Dil okulu içinden bir kare" /></div>
             </div>
           </div>
         </div>
