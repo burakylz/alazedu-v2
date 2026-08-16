@@ -48,9 +48,9 @@ export default function YazOkullari() {
               </div>
             </div>
             <div className="uhero-collage">
-              <div className="p"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/London_Skyline_%28125508655%29.jpeg/1280px-London_Skyline_%28125508655%29.jpeg" alt="Londra manzarası — yaz" /></div>
-              <div className="p"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Houses_of_Parliament_in_2022_%28cropped%29.jpg/1280px-Houses_of_Parliament_in_2022_%28cropped%29.jpg" alt="Londra, Parlamento" /></div>
-              <div className="p"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Tate_Modern_-_Bankside_Power_Station.jpg/1280px-Tate_Modern_-_Bankside_Power_Station.jpg" alt="Londra, South Bank" /></div>
+              <div className="p"><img src="/img/yaz-grup.jpg" alt="Yaz okulu öğrencileri — sertifika töreni" /></div>
+              <div className="p"><img src="/img/yaz-sinif.jpg" alt="Yaz okulu İngilizce dersi" /></div>
+              <div className="p"><img src="/img/yaz-londra.jpg" alt="Londra gezisi — Buckingham Sarayı" /></div>
             </div>
           </div>
         </div>
