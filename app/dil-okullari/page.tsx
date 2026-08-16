@@ -28,7 +28,7 @@ export default function DilOkullari() {
     <>
       <style>{`
         .uhero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:center}
-        .uhero-collage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:340px}
+        .uhero-collage{display:grid;grid-template-columns:5fr 3fr;grid-template-rows:1fr 1fr;gap:14px;height:400px}
         .uhero-collage .p{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line2)}
         .uhero-collage .p:first-child{grid-row:span 2}
         .uhero-collage img{width:100%;height:100%;object-fit:cover}
@@ -43,7 +43,7 @@ export default function DilOkullari() {
         .ptable td{color:var(--mut)}
         .uhero-grid h1{font-size:54px;line-height:1.04}
         .infogrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
-        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:31px}.uhero-collage{height:230px}.ustats{gap:22px}.infogrid{grid-template-columns:1fr}}
+        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:31px}.uhero-collage{height:300px}.ustats{gap:22px}.infogrid{grid-template-columns:1fr}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
 
