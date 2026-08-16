@@ -22,9 +22,9 @@ export default function LiseStaj() {
     <>
       <style>{`
         .uhero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:center}
-        .uhero-collage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:340px}
-        .uhero-collage .p{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line2)}
-        .uhero-collage .p:first-child{grid-row:span 2}
+        .uhero-collage{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .uhero-collage .p{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line2);aspect-ratio:3/2}
+        .uhero-collage .p:first-child{grid-column:1 / -1}
         .uhero-collage img{width:100%;height:100%;object-fit:cover}
         .uhero-collage .p::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(10,20,38,.1),rgba(10,20,38,.45))}
         .ustats{display:flex;gap:34px;margin-top:26px}
@@ -35,7 +35,7 @@ export default function LiseStaj() {
         .ptable th{color:var(--mut2);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
         .ptable td:first-child{font-weight:600}.ptable td{color:var(--mut)}
         .uhero-grid h1{font-size:50px;line-height:1.05}
-        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:30px}.uhero-collage{height:230px}.ustats{gap:20px}}
+        @media(max-width:900px){.uhero-grid{grid-template-columns:1fr}.uhero-grid h1{font-size:30px}.ustats{gap:20px}}
       `}</style>
       <div dangerouslySetInnerHTML={{ __html: nav.split('<!--SPLIT-->')[0] }} />
 
@@ -52,9 +52,9 @@ export default function LiseStaj() {
               </div>
             </div>
             <div className="uhero-collage">
-              <div className="p"><img src="https://picsum.photos/seed/londoncareer/500/700" alt="" /></div>
-              <div className="p"><img src="https://picsum.photos/seed/uclstudents/500/340" alt="" /></div>
-              <div className="p"><img src="https://picsum.photos/seed/internshiplab/500/340" alt="" /></div>
+              <div className="p"><img src="/img/staj-grup.jpg" alt="Londra yaz kariyer programı grubu" /></div>
+              <div className="p"><img src="/img/staj-tip.jpg" alt="Genç Doktorlar — klinik simülasyon" /></div>
+              <div className="p"><img src="/img/staj-hukuk.jpg" alt="Genç Avukatlar — duruşma simülasyonu" /></div>
             </div>
           </div>
         </div>
